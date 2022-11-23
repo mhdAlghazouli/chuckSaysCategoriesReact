@@ -1,23 +1,27 @@
-import logo from './logo.svg';
+import {useState, useEffect} from "react";
+import Select from "./components/Select";
 import './App.css';
 
 function App() {
+  const [catData, setCatData] = useState([]);
+
+  function getCatData() {
+    fetch("https://api.chucknorris.io/jokes/categories")
+    .then(response => response.json())
+    .then(data => setCatData(data))
+  }
+
+  useEffect(() => {
+    getCatData()
+  },[]);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        chuckNorris
       </header>
+      
+      <Select  catData={catData}/>
     </div>
   );
 }
